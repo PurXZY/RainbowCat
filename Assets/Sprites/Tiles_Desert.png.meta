@@ -1,18 +1,39 @@
 fileFormatVersion: 2
-guid: c0a5a87d19188f54ebc44df12c0ef2c5
+guid: 3fee7df828e6f284bbcf208bce9c5e21
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Tiles_GrassDark_0
-    21300002: Tiles_GrassDark_1
-    21300004: Tiles_GrassDark_2
-    21300006: Tiles_GrassDark_3
-    21300008: Tiles_GrassDark_4
-    21300010: Tiles_GrassDark_5
-    21300012: Tiles_GrassDark_6
-    21300014: Tiles_GrassDark_7
-    21300016: Tiles_GrassDark_8
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: Tiles_Desert_0
+  - first:
+      213: 21300002
+    second: Tiles_Desert_1
+  - first:
+      213: 21300004
+    second: Tiles_Desert_2
+  - first:
+      213: 21300006
+    second: Tiles_Desert_3
+  - first:
+      213: 21300008
+    second: Tiles_Desert_4
+  - first:
+      213: 21300010
+    second: Tiles_Desert_5
+  - first:
+      213: 21300012
+    second: Tiles_Desert_6
+  - first:
+      213: 21300014
+    second: Tiles_Desert_7
+  - first:
+      213: 21300016
+    second: Tiles_Desert_8
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -51,7 +72,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 64
@@ -67,7 +88,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -78,7 +99,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -89,7 +111,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -100,7 +123,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -111,7 +135,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -122,11 +147,12 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tiles_GrassDark_0
+      name: Tiles_Desert_0
       rect:
         serializedVersion: 2
         x: 0
@@ -140,13 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2636df4a28985d94da44af6dc9949be4
+      spriteID: 2962543e3115c554a8f33bb8215c3c78
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_GrassDark_1
+      name: Tiles_Desert_1
       rect:
         serializedVersion: 2
         x: 64
@@ -160,13 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e92ad4204af5f1d42bd5429b9708d065
+      spriteID: 9fa3c7d06a70bdc43a5503b80f899cb4
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_GrassDark_2
+      name: Tiles_Desert_2
       rect:
         serializedVersion: 2
         x: 128
@@ -180,13 +208,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4ccb3e68a02330842926fb997eb30d97
+      spriteID: 5f045cba460b22b45adebfe8eb588260
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_GrassDark_3
+      name: Tiles_Desert_3
       rect:
         serializedVersion: 2
         x: 0
@@ -200,13 +229,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f63af158227f29e4790494d5f91dc6f5
+      spriteID: 0326353c32204a540a389cffd0abe2fd
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_GrassDark_4
+      name: Tiles_Desert_4
       rect:
         serializedVersion: 2
         x: 64
@@ -220,13 +250,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41d4d3ea49d17aa4e9ea8abc9d4397aa
+      spriteID: 08fce755a8901ba4d9100e40ba79e9d2
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_GrassDark_5
+      name: Tiles_Desert_5
       rect:
         serializedVersion: 2
         x: 128
@@ -240,13 +271,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0995266383591964788b2b9f65d2aeb5
+      spriteID: f1488a59ca3910d4c872f73ebc3e5bdc
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_GrassDark_6
+      name: Tiles_Desert_6
       rect:
         serializedVersion: 2
         x: 0
@@ -260,13 +292,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4411ad9134b8d82438650cb99c3201fb
+      spriteID: 6adac2720cca0a846ad8645ebd220f96
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_GrassDark_7
+      name: Tiles_Desert_7
       rect:
         serializedVersion: 2
         x: 64
@@ -280,13 +313,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 162053ea307cff546b296ef5c20cbba7
+      spriteID: 9ce21cd00b3e63a4e92c7ec13d0b5249
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_GrassDark_8
+      name: Tiles_Desert_8
       rect:
         serializedVersion: 2
         x: 128
@@ -300,7 +334,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 509be771cb9e9014f8f154f37455fdc7
+      spriteID: e79e15a072fc49a4d974e22ad375ae9f
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -308,11 +343,13 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 8ce84d7ab23a1ef41ba7e3d6350755a2
+    spriteID: 2a79af6e449ed6347980b0b4006b8b7f
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
