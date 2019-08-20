@@ -83,12 +83,14 @@ public class MoveController : MonoBehaviour
             return "redboy_walk_down";
         else if (m_dir == Vector2.left)
         {
-            m_spriteRenderer.flipX = false;
+            //m_spriteRenderer.flipX = false;
+            transform.localScale = new Vector3(1,1,1);
             return "redboy_walk_left";
         }
         else if (m_dir == Vector2.right)
         {
-            m_spriteRenderer.flipX = true;
+            //m_spriteRenderer.flipX = true;
+            transform.localScale = new Vector3(-1, 1, 1);
             return "redboy_walk_left";
         }
         else 
