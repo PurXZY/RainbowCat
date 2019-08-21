@@ -1,18 +1,108 @@
 fileFormatVersion: 2
-guid: c12a9ef0e75f18949a86a10822cf29f5
+guid: 4c4775fa3485eda4197558b5d1206d16
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: animated tree_0
-    21300002: animated tree_1
-    21300004: animated tree_2
-    21300006: animated tree_3
-    21300008: animated tree_4
-    21300010: animated tree_5
-    21300012: animated tree_6
-    21300014: animated tree_7
-    2186277476908879412: ImportLogs
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: animated tree2_0
+  - first:
+      213: 21300002
+    second: animated tree2_1
+  - first:
+      213: 21300004
+    second: animated tree2_2
+  - first:
+      213: 21300006
+    second: animated tree2_3
+  - first:
+      213: 21300008
+    second: animated tree2_4
+  - first:
+      213: 21300010
+    second: animated tree2_5
+  - first:
+      213: 21300012
+    second: animated tree2_6
+  - first:
+      213: 21300014
+    second: animated tree2_7
+  - first:
+      213: 21300016
+    second: animated tree2_8
+  - first:
+      213: 21300018
+    second: animated tree2_9
+  - first:
+      213: 21300020
+    second: animated tree2_10
+  - first:
+      213: 21300022
+    second: animated tree2_11
+  - first:
+      213: 21300024
+    second: animated tree2_12
+  - first:
+      213: 21300026
+    second: animated tree2_13
+  - first:
+      213: 21300028
+    second: animated tree2_14
+  - first:
+      213: 21300030
+    second: animated tree2_15
+  - first:
+      213: 21300032
+    second: animated tree2_16
+  - first:
+      213: 21300034
+    second: animated tree2_17
+  - first:
+      213: 21300036
+    second: animated tree2_18
+  - first:
+      213: 21300038
+    second: animated tree2_19
+  - first:
+      213: 21300040
+    second: animated tree2_20
+  - first:
+      213: 21300042
+    second: animated tree2_21
+  - first:
+      213: 21300044
+    second: animated tree2_22
+  - first:
+      213: 21300046
+    second: animated tree2_23
+  - first:
+      213: 21300048
+    second: animated tree2_24
+  - first:
+      213: 21300050
+    second: animated tree2_25
+  - first:
+      213: 21300052
+    second: animated tree2_26
+  - first:
+      213: 21300054
+    second: animated tree2_27
+  - first:
+      213: 21300056
+    second: animated tree2_28
+  - first:
+      213: 21300058
+    second: animated tree2_29
+  - first:
+      213: 21300060
+    second: animated tree2_30
+  - first:
+      213: 21300062
+    second: animated tree2_31
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -67,7 +157,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 512
     resizeAlgorithm: 0
@@ -78,7 +168,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 512
     resizeAlgorithm: 0
@@ -89,7 +180,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: iPhone
     maxTextureSize: 512
     resizeAlgorithm: 0
@@ -100,7 +192,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 512
     resizeAlgorithm: 0
@@ -111,7 +204,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 512
     resizeAlgorithm: 0
@@ -122,11 +216,12 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: animated tree_0
+      name: animated tree2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -135,18 +230,19 @@ TextureImporter:
         height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 8, z: 0, w: 108}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a15e211d75a8154fa3c9c0b531346bf
+      spriteID: 178bea883e4a9224f843ce5a80a0704e
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated tree_1
+      name: animated tree2_1
       rect:
         serializedVersion: 2
         x: 128
@@ -155,18 +251,19 @@ TextureImporter:
         height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 8, z: 0, w: 108}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 78adee79eb343e245ada0c2a6f7d014d
+      spriteID: 7708058036b5197469daa81553ba6168
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated tree_2
+      name: animated tree2_2
       rect:
         serializedVersion: 2
         x: 256
@@ -175,18 +272,19 @@ TextureImporter:
         height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 8, z: 0, w: 108}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 583eb9f1028fcd84f992d49e97243c04
+      spriteID: 2bf657a384900ff4594c3a6ca75f7e8c
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated tree_3
+      name: animated tree2_3
       rect:
         serializedVersion: 2
         x: 384
@@ -195,18 +293,19 @@ TextureImporter:
         height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 8, z: 0, w: 108}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ababe132b75d5548ae1c22c47e0e384
+      spriteID: 548a685fa4fb5354db2d6c12104802e5
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated tree_4
+      name: animated tree2_4
       rect:
         serializedVersion: 2
         x: 0
@@ -215,18 +314,19 @@ TextureImporter:
         height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 8, z: 0, w: 108}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0158a701b8d44cf458249cb397a1c1c5
+      spriteID: fd287e09fc760c1468bf49431cda0d17
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated tree_5
+      name: animated tree2_5
       rect:
         serializedVersion: 2
         x: 128
@@ -235,18 +335,19 @@ TextureImporter:
         height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 8, z: 0, w: 108}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 201bac31e1fe81144b44e906afa6fedc
+      spriteID: 33623baad5f634245b6b5bc38c15bb87
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated tree_6
+      name: animated tree2_6
       rect:
         serializedVersion: 2
         x: 256
@@ -255,18 +356,19 @@ TextureImporter:
         height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 8, z: 0, w: 108}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ebf422a1e3dae042b8f21ff9e6c1d93
+      spriteID: 867f8783f3348b74f92858d08cf0b682
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated tree_7
+      name: animated tree2_7
       rect:
         serializedVersion: 2
         x: 384
@@ -275,12 +377,13 @@ TextureImporter:
         height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 8, z: 0, w: 108}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4fa9a4922996e843abf9b0b023649ff
+      spriteID: f1c9c39275b73504280b3da2b67d8c56
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -288,11 +391,13 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: afc352d2cf7ff954a9c3aa179fca4653
+    spriteID: 86af0b09b3f8eb443b2c2a715e09cda8
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
