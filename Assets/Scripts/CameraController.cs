@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
         IsFollowing = true;//默认为跟随
     }
 
-    void Update()
+    void LateUpdate()
     {
         var x = transform.position.x;
         var y = transform.position.y;
