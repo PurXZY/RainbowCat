@@ -12,7 +12,6 @@ public class GameController : MonoBehaviour
     void Start()
     {
         Instance = this;
-        Application.targetFrameRate = 120;
     }
 
     void Update()
