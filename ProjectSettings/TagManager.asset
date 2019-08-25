@@ -44,9 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Object
-    uniqueID: 474274865
-    locked: 0
   - name: Player
     uniqueID: 3510588525
+    locked: 0
+  - name: Object
+    uniqueID: 474274865
     locked: 0
