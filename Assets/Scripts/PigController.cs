@@ -6,7 +6,7 @@ public class PigController : MonoBehaviour
 {
     public List<Vector2> patrolPos;
     int patrolIndex = 0;
-    bool isInPatrol = true;
+    private bool isInPatrol = true;
     float speed = 2.0f;
     private Animator animator;
     public Vector2 curDir
@@ -44,5 +44,15 @@ public class PigController : MonoBehaviour
     void changePatrolIndex()
     {
         patrolIndex = patrolIndex + 1 >= patrolPos.Count ? 0 : patrolIndex + 1;
+    }
+
+    public void stopPatrol()
+    {
+        isInPatrol = false;
+    }
+
+    public void resumePatrol()
+    {
+        isInPatrol = true;
     }
 }

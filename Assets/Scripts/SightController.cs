@@ -1,31 +1,45 @@
 ﻿using System.Collections;
-
 using System.Collections.Generic;
-
 using UnityEngine;
 
 public class SightController : MonoBehaviour
 {
-    void Update()
+    public float sightRadius = 3.0f;
+    public float sightAngle = 60;
+    public int inSightTime = 1;
+    private CircleCollider2D sightCollider;
+    private List<GameObject> playerNearby = new List<GameObject>();
+    private Dictionary<GameObject, long> playerInSight = new Dictionary<GameObject, long>();
+
+    private void Start()
     {
-        DrawTriangle(transform, transform.position, 60, 3, GetComponent<PigController>().curDir);
+        sightCollider = gameObject.AddComponent<CircleCollider2D>();
+        sightCollider.isTrigger = true;
+        sightCollider.offset = Vector2.zero;
+        sightCollider.radius = sightRadius;
     }
 
-    private static LineRenderer GetLineRenderer(Transform t)
+    private void Update()
     {
-        LineRenderer lr = t.GetComponent<LineRenderer>();
+        DrawTriangle(transform.position, sightAngle, sightRadius, GetComponent<PigController>().curDir);
+        CheckPlayerIsInSight();
+    }
+
+    private LineRenderer GetLineRenderer()
+    {
+        LineRenderer lr = GetComponent<LineRenderer>();
         if (lr == null)
         {
-            lr = t.gameObject.AddComponent<LineRenderer>();
+            lr = gameObject.AddComponent<LineRenderer>();
         }
         lr.startWidth = 0.05f;
         lr.endWidth = 0.05f;
         return lr;
     }
 
-    public static void DrawTriangle(Transform t, Vector3 startPos, float angle, float radius, Vector2 curDir)
+    private void DrawTriangle(Vector3 startPos, float angle, float radius, Vector2 curDir)
     {
-        LineRenderer lr = GetLineRenderer(t);
+        LineRenderer lr = GetLineRenderer();
         int pointAmount = 50;
         float eachAngle = angle / pointAmount;
 
@@ -38,5 +52,62 @@ public class SightController : MonoBehaviour
             lr.SetPosition(i, pos);
         }
         lr.SetPosition(pointAmount-1, startPos);
+    }
+
+    private void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.CompareTag("Player"))
+        {
+            playerNearby.Add(coll.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D coll)
+    {
+        if (coll.gameObject.CompareTag("Player"))
+        {
+            playerNearby.Remove(coll.gameObject);
+            playerInSight.Remove(coll.gameObject);
+        }
+    }
+
+    private void CheckPlayerIsInSight()
+    {
+        System.TimeSpan st = System.DateTime.UtcNow - new System.DateTime(1970, 1, 1, 0, 0, 0);
+        long nowTime = System.Convert.ToInt64(st.TotalSeconds);
+
+        List<GameObject> leaveSightPlayes = new List<GameObject>(playerNearby);
+        foreach (var player in playerNearby)
+        {
+            
+            Vector2 sightDir = player.transform.position - transform.position;
+            float angle = Vector2.Angle(sightDir, GetComponent<PigController>().curDir);
+            if (angle < sightAngle / 2)
+            {
+                leaveSightPlayes.Remove(player);
+                if (!playerInSight.ContainsKey(player))
+                    playerInSight[player] = nowTime;
+                GetComponent<PigController>().stopPatrol();
+            }
+        }
+
+        foreach (var player in leaveSightPlayes)
+        {
+            playerInSight.Remove(player);
+        }
+
+
+        foreach (var time in playerInSight.Values)
+        {
+            if (nowTime - time > inSightTime)
+            {
+                GameController.Instance.GameOver();
+            }
+        }
+
+        if (playerInSight.Count == 0)
+        {
+            GetComponent<PigController>().resumePatrol();
+        }
     }
 }
