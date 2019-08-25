@@ -6,7 +6,7 @@ public class SightController : MonoBehaviour
 {
     public float sightRadius = 3.0f;
     public float sightAngle = 60;
-    public int inSightTime = 1;
+    public int inSightTime = 3;
     private CircleCollider2D sightCollider;
     private List<GameObject> playerNearby = new List<GameObject>();
     private Dictionary<GameObject, long> playerInSight = new Dictionary<GameObject, long>();
@@ -99,9 +99,11 @@ public class SightController : MonoBehaviour
 
         foreach (var time in playerInSight.Values)
         {
-            if (nowTime - time > inSightTime)
+            float scale = (float)(nowTime - time) / (float)inSightTime;
+            GetComponent<PigController>().threatValueUI.GetComponent<ThreatValueController>().SetValue(scale);
+            if (nowTime - time >= inSightTime)
             {
-                GameController.Instance.GameOver();
+                // GameController.Instance.GameOver();
             }
         }
 

@@ -115,7 +115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c874873f55dc1934386c034bd4cf1c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sight: 3
+  sightRadius: 3
+  sightAngle: 60
+  inSightTime: 3
 --- !u!114 &7866702674035102889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,7 +131,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPos:
-  - {x: -5, y: 0}
-  - {x: -1, y: 0}
   - {x: -1, y: -3}
   - {x: -5, y: -3}
+  - {x: -5, y: 0}
+  - {x: -1, y: 0}
+  threatValueObject: {fileID: 2787487751118207639, guid: 71493e7d2dfd1354a877fa08528db8f0,
+    type: 3}
+  threatValueParent: {fileID: 0}

@@ -14,10 +14,21 @@ public class PigController : MonoBehaviour
         private set;
         get;
     }
-
+    public GameObject threatValueObject;
+    public Transform threatValueParent;
+    public GameObject threatValueUI
+    {
+        private set;
+        get;
+    }
     void Start()
     {
         animator = GetComponent<Animator>();
+        var pos = Camera.main.WorldToScreenPoint(transform.position);
+        threatValueUI = Instantiate(threatValueObject, pos, Quaternion.identity);
+        threatValueUI.transform.SetParent(threatValueParent);
+        threatValueUI.transform.localScale = new Vector3(1, 1, 1);
+        threatValueUI.GetComponent<ThreatValueController>().pig = this.transform;
     }
 
     void FixedUpdate()
