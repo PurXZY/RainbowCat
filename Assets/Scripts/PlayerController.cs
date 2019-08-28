@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
         m_Animator = GetComponent<Animator>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
