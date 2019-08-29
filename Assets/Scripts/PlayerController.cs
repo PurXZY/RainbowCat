@@ -22,4 +22,12 @@ public class PlayerController : MonoBehaviour
         m_Animator.SetFloat("moveY", moveY);
         transform.Translate(new Vector2(moveX, moveY) * m_Speed * Time.deltaTime);
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (TagCheckManager.IsEnemy(collision.gameObject))
+        {
+            Debug.Log("trigger");
+        }
+    }
 }

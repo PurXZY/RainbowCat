@@ -5,30 +5,19 @@ using UnityEngine;
 public class PigController : MonoBehaviour
 {
     public List<Vector2> patrolPos;
-    int patrolIndex = 0;
+    private int patrolIndex = 0;
     private bool isInPatrol = true;
-    float speed = 2.0f;
+    private float speed = 2.0f;
     private Animator animator;
     public Vector2 curDir
     {
         private set;
         get;
     }
-    public GameObject threatValueObject;
-    public Transform threatValueParent;
-    public GameObject threatValueUI
-    {
-        private set;
-        get;
-    }
+
     void Start()
     {
         animator = GetComponent<Animator>();
-        var pos = Camera.main.WorldToScreenPoint(transform.position);
-        threatValueUI = Instantiate(threatValueObject, pos, Quaternion.identity);
-        threatValueUI.transform.SetParent(threatValueParent);
-        threatValueUI.transform.localScale = new Vector3(1, 1, 1);
-        threatValueUI.GetComponent<ThreatValueController>().pig = this.transform;
     }
 
     void FixedUpdate()
