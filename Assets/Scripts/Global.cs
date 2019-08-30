@@ -17,5 +17,12 @@ public class TagCheckManager
             return true;
         return false;
     }
+
+    public static bool IsWall(GameObject target)
+    {
+        if (target.CompareTag("Wall"))
+            return true;
+        return false;
+    }
 }
 
