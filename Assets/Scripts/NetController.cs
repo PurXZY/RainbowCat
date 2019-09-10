@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Text;
+using System;
 
 public class NetController : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class NetController : MonoBehaviour
 
     void SocketReceive()
     {
+        SocketSend("hello server");
         //不断接收服务器发来的数据
         while (true)
         {
@@ -46,12 +48,17 @@ public class NetController : MonoBehaviour
 
     void SocketSend(string sendStr)
     {
-        //清空发送缓存
-        sendData = new byte[1024];
-        //数据类型转换
-        sendData = Encoding.ASCII.GetBytes(sendStr);
-        //发送
-        serverSocket.Send(sendData, sendData.Length, SocketFlags.None);
+        int msgLen = Encoding.UTF8.GetByteCount(sendStr);
+        byte[] data = new byte[4 + msgLen];
+        //把长度转成字节数组 大端字节
+        byte[] lenbytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(msgLen));
+        //把消息转为字节数组
+        byte[] bodybytes = Encoding.UTF8.GetBytes(sendStr);
+        //将len添加到bytes数组中
+        Array.Copy(lenbytes, data, 4);
+        //将实际内容添加到bytes数组中
+        Array.Copy(bodybytes, 0, data, 4, msgLen);
+        serverSocket.Send(data);
     }
 
     void SocketQuit()
