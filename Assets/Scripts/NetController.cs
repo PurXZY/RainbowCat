@@ -16,7 +16,10 @@ public class NetController : MonoBehaviour
 
     private byte[] recvData = new byte[1024]; //接收的数据，必须为字节
     private byte[] sendData = new byte[1024]; //发送的数据，必须为字节
+    private byte[] msg_header_pack = new byte[4];
+    private byte[] msg_id_pack = new byte[4];
     private int recvLen; //接收的数据长度
+    private object locker = new object();
 
     void Start()
     {
@@ -32,7 +35,7 @@ public class NetController : MonoBehaviour
 
     void SocketReceive()
     {
-        SocketSend("hello server");
+        SocketSend(122, "hello server");
         //不断接收服务器发来的数据
         while (true)
         {
@@ -41,23 +44,27 @@ public class NetController : MonoBehaviour
             if (recvLen == 0)
             {
                 serverSocket.Close();
-                continue;
+                serverSocket = null;
+                break;
             }
+            if (recvLen < 8)
+                continue;
+            int msg_len = BitConverter.ToInt32(recvData, 0);
+            int msg_id = BitConverter.ToInt32(recvData, 4);
+            print(string.Format("new message id({0})", msg_id));
         }
     }
 
-    void SocketSend(string sendStr)
+    void SocketSend(int msg_id, string sendStr)
     {
-        int msgLen = Encoding.UTF8.GetByteCount(sendStr);
+        int msgLen = Encoding.UTF8.GetByteCount(sendStr) + 4;
         byte[] data = new byte[4 + msgLen];
-        //把长度转成字节数组 大端字节
         byte[] lenbytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(msgLen));
-        //把消息转为字节数组
+        byte[] idbytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(msg_id));
         byte[] bodybytes = Encoding.UTF8.GetBytes(sendStr);
-        //将len添加到bytes数组中
         Array.Copy(lenbytes, data, 4);
-        //将实际内容添加到bytes数组中
-        Array.Copy(bodybytes, 0, data, 4, msgLen);
+        Array.Copy(idbytes, 0, data, 4, 4);
+        Array.Copy(bodybytes, 0, data, 8, msgLen - 4);
         serverSocket.Send(data);
     }
 
