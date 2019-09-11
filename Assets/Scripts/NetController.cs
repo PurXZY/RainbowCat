@@ -49,9 +49,12 @@ public class NetController : MonoBehaviour
             }
             if (recvLen < 8)
                 continue;
-            int msg_len = BitConverter.ToInt32(recvData, 0);
-            int msg_id = BitConverter.ToInt32(recvData, 4);
-            print(string.Format("new message id({0})", msg_id));
+            int msg_len = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(recvData, 0));
+            int msg_id = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(recvData, 4));
+            byte[] msg_data_pack = new byte[msg_len];
+            Array.Copy(recvData, 8, msg_data_pack, 0, msg_len);
+            string msg_data = Encoding.UTF8.GetString(msg_data_pack);
+            print(string.Format("new message len({0}) id({1}) data({2})", msg_len, msg_id, msg_data));
         }
     }
 
