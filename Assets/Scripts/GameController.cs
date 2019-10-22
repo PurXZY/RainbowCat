@@ -7,55 +7,47 @@ using UnityEngine.Tilemaps;
 public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
-    
-    private PlayerController m_PlayerController;
+
+    [SerializeField]
+    GameObject posCircle;
+    public List<Vector2> teamAPosInfo;
+    public List<Vector2> teamBPosInfo;
+    List<GameObject> teamAPosObjects = new List<GameObject>();
+    List<GameObject> teamBPosObjects = new List<GameObject>();
+
+    [SerializeField]
+    GameObject enemy;
+    [SerializeField]
+    GameObject hero;
 
     void Start()
     {
-        m_PlayerController = FindPlayer().GetComponent<PlayerController>();
+        Application.targetFrameRate = 60;
+        InitAllPosCircle();
+        CreateAllHero();
     }
 
     void Update()
     {
-        MoveTick();
-        ShootTick();
+        
     }
 
-    private GameObject FindPlayer()
+    void InitAllPosCircle()
     {
-        var targets = GameObject.FindGameObjectsWithTag("Player");
-        if (targets.Length > 0)
-            return targets[0];
-        return null;
+        foreach(var pos in teamAPosInfo)
+        {
+            GameObject posCircleObject = Instantiate(posCircle, pos, Quaternion.identity);
+            teamAPosObjects.Add(posCircleObject);
+        }
+        foreach (var pos in teamBPosInfo)
+        {
+            GameObject posCircleObject = Instantiate(posCircle, pos, Quaternion.identity);
+            teamBPosObjects.Add(posCircleObject);
+        }
     }
 
-    private void MoveTick()
+    void CreateAllHero()
     {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-        bool isMoving = true;
-        Vector2 dir = Vector2.zero;
-        if (Mathf.Abs(moveX) > 0.01f)
-        {
-            dir = moveX > 0.01f ? Vector2.right : Vector2.left;
-        }
-        else if (Mathf.Abs(moveY) > 0.01f)
-        {
-            dir = moveY > 0.01f ? Vector2.up : Vector2.down;
-        }
-        else
-        {
-            isMoving = false;
-        }
 
-        m_PlayerController.SetMoveState(isMoving, dir);
-    }
-
-    private void ShootTick()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            m_PlayerController.ShootBullet();
-        }
     }
 }
