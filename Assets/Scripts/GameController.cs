@@ -9,22 +9,16 @@ public class GameController : MonoBehaviour
     public static GameController Instance { get; private set; }
 
     [SerializeField]
-    GameObject posCircle;
+    GameObject posCircle = null;
     public List<Vector2> teamAPosInfo;
     public List<Vector2> teamBPosInfo;
     List<GameObject> teamAPosObjects = new List<GameObject>();
     List<GameObject> teamBPosObjects = new List<GameObject>();
 
-    [SerializeField]
-    GameObject enemy;
-    [SerializeField]
-    GameObject hero;
-
     void Start()
     {
         Application.targetFrameRate = 60;
         InitAllPosCircle();
-        CreateAllHero();
     }
 
     void Update()
@@ -44,10 +38,5 @@ public class GameController : MonoBehaviour
             GameObject posCircleObject = Instantiate(posCircle, pos, Quaternion.identity);
             teamBPosObjects.Add(posCircleObject);
         }
-    }
-
-    void CreateAllHero()
-    {
-
     }
 }
