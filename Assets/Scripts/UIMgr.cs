@@ -13,7 +13,7 @@ public class UIMgr : MonoBehaviour
     }
 
 
-    [SerializeField] private Text m_TurnInfoText;
+    [SerializeField] private Text m_TurnInfoText = null;
 
     public void SetTurnInfoText(int turn)
     {

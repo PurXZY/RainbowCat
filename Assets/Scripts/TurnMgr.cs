@@ -51,7 +51,8 @@ public class TurnMgr
 
     private void AssignNextEntityTurn()
     {
-
+        var target_id = m_SmallTurnOrder[m_SmallTurnOrderIndex++];
+        AssignEntityTurn(target_id);
     }
 
     /// <summary>
@@ -60,7 +61,10 @@ public class TurnMgr
     /// <param name="id"></param>
     private void AssignEntityTurn(string id)
     {
-
+        var entity = SpaceMgr.Instance.GetEntityById(id);
+        Debug.Log(string.Format("Turn:{0} Entity:{1}", m_BigTurnInfo, id));
+        var controller = entity.GetComponent<BattleEntityController>();
+        controller.BeginMyTurn();
     }
 
     /// <summary>

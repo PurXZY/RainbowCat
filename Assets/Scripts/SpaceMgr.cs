@@ -10,11 +10,13 @@ public class SpaceMgr : MonoBehaviour
         Instance = this;
     }
 
-    [SerializeField] private GameObject BattleEntity;
+    [SerializeField] private GameObject BattleEntity = null;
 
     private GameObject m_BattleEntitiesParentNode;
     private Transform m_LeftTeamParentTransform;
     private Transform m_RightTeamParentTransform;
+
+    private Dictionary<string, GameObject> m_entities = new Dictionary<string, GameObject>();
 
     private void Start()
     {
@@ -43,10 +45,11 @@ public class SpaceMgr : MonoBehaviour
     {
         Transform parentTransform = isTeamLeft ? m_LeftTeamParentTransform : m_RightTeamParentTransform;
         var entity = Instantiate(BattleEntity, pos, Quaternion.identity, parentTransform);
-        EntityMgr.Instance.RegisterEntity(id, entity);
+        RegisterEntity(id, entity);
         var speed = Random.Range(1.0f, 10.0f);
         var entityController = entity.GetComponent<BattleEntityController>();
-        entityController.SetBattleData(id, speed);
+        entityController.SetBattleData(id, speed, isTeamLeft);
+        Debug.Log(string.Format("new Entity:{0} speed{1}", id, speed));
     }
 
     public List<BattleEntityController> GetAllBattleEntities()
@@ -75,5 +78,15 @@ public class SpaceMgr : MonoBehaviour
             ret.Add(child.GetComponent<BattleEntityController>());
         }
         return ret;
+    }
+
+    public GameObject GetEntityById(string id)
+    {
+        return m_entities[id];
+    }
+
+    private void RegisterEntity(string id, GameObject entity)
+    {
+        m_entities.Add(id, entity);
     }
 }
