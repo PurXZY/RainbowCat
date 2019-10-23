@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Wall
+  - BattleEntities
   layers:
   - Default
   - TransparentFX
@@ -54,4 +55,10 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3510588525
+    locked: 0
+  - name: UnderFoot
+    uniqueID: 3556917417
+    locked: 0
+  - name: BattleEntity
+    uniqueID: 1800681625
     locked: 0

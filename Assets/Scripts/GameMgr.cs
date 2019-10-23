@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class GameMgr : MonoBehaviour
 {
-    TurnMgr m_TurnMgr;
+    private SpaceMgr m_SpaceMgr;
 
     void Start()
     {
         Application.targetFrameRate = 60;
-        m_TurnMgr = GetComponent<TurnMgr>();
+
+        m_SpaceMgr = GetComponent<SpaceMgr>();
 
         Invoke("GameStart", 1.0f);
     }
@@ -17,6 +18,6 @@ public class GameMgr : MonoBehaviour
     void GameStart()
     {
         Debug.Log("Game Start");
-        m_TurnMgr.GameStart();
+        m_SpaceMgr.InitBattleTurnSpace();
     }
 }
