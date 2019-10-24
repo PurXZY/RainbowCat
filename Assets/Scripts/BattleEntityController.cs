@@ -9,12 +9,13 @@ public class BattleEntityController : MonoBehaviour
     public bool m_IsTeamLeft = true;
     public float m_MaxHealth = 0.0f;
     public float m_CurHealth = 0.0f;
+    public float m_attack = 0.0f;
+    public float m_defend = 0.0f;
 
-    private bool m_IsMyTurn = false;
     private Vector2 m_BirthPos;
     private Vector2 m_MoveToPos;
 
-    public void SetBattleData(string id, float health, float speed, bool isTeamLeft)
+    public void SetBattleData(string id, float health, float speed, bool isTeamLeft, float attack, float defend)
     {
         m_BirthPos = transform.position;
         m_id = id;
@@ -22,18 +23,18 @@ public class BattleEntityController : MonoBehaviour
         m_CurHealth = health;
         m_BattleSpeed = speed;
         m_IsTeamLeft = isTeamLeft;
-
+        m_attack = attack;
+        m_defend = defend;
         HealthChanged();
     }
 
     private void HealthChanged()
     {
-        UIMgr.Instance.HealthChanged(m_id);
+        UIMgr.Instance.HealthChanged(m_id, 0);
     }
 
     public void BeginMyTurn()
     {
-        m_IsMyTurn = true;
         if (m_IsTeamLeft)
         {
             DoAI();
@@ -49,17 +50,16 @@ public class BattleEntityController : MonoBehaviour
     {
         var target = SpaceMgr.Instance.GetRandomEntityByTeam(!m_IsTeamLeft);
         m_MoveToPos = target.transform.position;
-        StartCoroutine(Patrol(transform.position, m_MoveToPos, 1.0f));
+        StartCoroutine(Patrol(transform.position, m_MoveToPos, 1.0f, target));
     }
 
     private void EndMyTurn()
     {
-        m_IsMyTurn = false;
         TurnMgr.Instance.EntityEndTurn();
     }
 
     //在time时间内移动物体
-    private IEnumerator Patrol(Vector2 startPos, Vector2 endPos, float time)
+    private IEnumerator Patrol(Vector2 startPos, Vector2 endPos, float time, GameObject target)
     {
         var dur = 0.0f;
         while (dur <= time)
@@ -69,6 +69,7 @@ public class BattleEntityController : MonoBehaviour
             yield return null;
         }
         dur = 0.0f;
+        AttackTarget(target);
         while (dur <= time)
         {
             dur += Time.deltaTime;
@@ -76,6 +77,36 @@ public class BattleEntityController : MonoBehaviour
             yield return null;
         }
         EndMyTurn();
+    }
+
+    private void AttackTarget(GameObject target)
+    {
+        var targetController = target.GetComponent<BattleEntityController>();
+        bool isCrit = (Random.value > 0.5f);
+        float downHealth = (m_attack - targetController.m_defend) * (isCrit ? 1.5f : 1.0f);
+        if (downHealth > 0.01f)
+        {
+            targetController.OnHit(downHealth);
+        }
+    }
+
+    private void OnHit(float damage)
+    {
+        m_CurHealth -= damage;
+        if (m_CurHealth < 0.01f)
+            m_CurHealth = 0.0f;
+        UIMgr.Instance.HealthChanged(m_id, damage);
+        if (m_CurHealth < 0.01f)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        UIMgr.Instance.OnEntityDestroy(m_id);
+        SpaceMgr.Instance.RemoveEntity(m_id);
+        Destroy(gameObject);
     }
 }
 

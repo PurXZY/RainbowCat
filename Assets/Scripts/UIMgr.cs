@@ -6,8 +6,12 @@ using UnityEngine.UI;
 public class UIMgr : MonoBehaviour
 {
     private Dictionary<string, GameObject> m_EntityHealth = new Dictionary<string, GameObject>();
-    [SerializeField] private Transform canvasNode;
-    [SerializeField] private GameObject healthUIObject;
+    [SerializeField] private Transform canvasNode = null;
+    private RectTransform canvasRectTransform = null;
+    [SerializeField] private GameObject healthUIObject = null;
+    [SerializeField] private GameObject winShowText = null;
+    [SerializeField] private GameObject explosionObject = null;
+    [SerializeField] private GameObject damageNumObject = null;
 
 
     public static UIMgr Instance;
@@ -18,6 +22,11 @@ public class UIMgr : MonoBehaviour
     }
 
 
+    private void Start()
+    {
+        canvasRectTransform = canvasNode.gameObject.GetComponent<RectTransform>();
+    }
+
     [SerializeField] private Text m_TurnInfoText = null;
 
     public void SetTurnInfoText(int turn)
@@ -25,7 +34,7 @@ public class UIMgr : MonoBehaviour
         m_TurnInfoText.text = "回合: " + turn;
     }
 
-    public void HealthChanged(string id)
+    public void HealthChanged(string id, float damage)
     {
         if (!m_EntityHealth.ContainsKey(id))
         {
@@ -34,6 +43,15 @@ public class UIMgr : MonoBehaviour
         else
         {
             var healthUI = m_EntityHealth[id];
+            var healthController = healthUI.GetComponent<HealthUIController>();
+            healthController.RefershHealth();
+        }
+        var owner = SpaceMgr.Instance.GetEntityById(id);
+        if (owner && damage > 0.01f)
+        {
+            var realPos = UIMgr.WorldToUGUIPosition(canvasRectTransform, (Vector2)owner.transform.position + new Vector2(0, 2));
+            var tmp = Instantiate(damageNumObject, realPos, Quaternion.identity, canvasNode);
+            tmp.GetComponent<DamageController>().SetDamageText(damage);
         }
     }
 
@@ -42,7 +60,7 @@ public class UIMgr : MonoBehaviour
         var target = SpaceMgr.Instance.GetEntityById(id);
         var healthUI = Instantiate(healthUIObject, canvasNode);
         m_EntityHealth.Add(id, healthUI);
-        healthUI.GetComponent<HealthUIController>().SetOwner(id, canvasNode.gameObject.GetComponent<RectTransform>());
+        healthUI.GetComponent<HealthUIController>().SetOwner(id, canvasRectTransform);
     }
 
     public static Vector2 WorldToUGUIPosition(RectTransform canvasRectTransform, Vector3 worldPosition)
@@ -50,5 +68,23 @@ public class UIMgr : MonoBehaviour
         Vector2 viewPos = Camera.main.WorldToViewportPoint(worldPosition);
         return new Vector2(canvasRectTransform.rect.width * viewPos.x, canvasRectTransform.rect.height * viewPos.y);
 
+    }
+
+    public void OnEntityDestroy(string id)
+    {
+        var target = m_EntityHealth[id];
+        m_EntityHealth.Remove(id);
+        Destroy(target);
+        var entity = SpaceMgr.Instance.GetEntityById(id);
+        if (entity)
+        {
+            Instantiate(explosionObject, entity.transform.position, Quaternion.identity);
+        }
+    }
+
+    public void GameOver(bool isTeamLeftWin)
+    {
+        winShowText.GetComponent<Text>().text = isTeamLeftWin ? "Left Win" : "Right Win";
+        winShowText.SetActive(true);
     }
 }

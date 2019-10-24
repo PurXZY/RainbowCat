@@ -15,6 +15,7 @@ public class SpaceMgr : MonoBehaviour
     private GameObject m_BattleEntitiesParentNode;
     private Transform m_LeftTeamParentTransform;
     private Transform m_RightTeamParentTransform;
+    public bool IsGameOver = false;
 
     private Dictionary<string, GameObject> m_entities = new Dictionary<string, GameObject>();
 
@@ -48,7 +49,7 @@ public class SpaceMgr : MonoBehaviour
         RegisterEntity(id, entity);
         var speed = Random.Range(1.0f, 10.0f);
         var entityController = entity.GetComponent<BattleEntityController>();
-        entityController.SetBattleData(id, 10.0f, speed, isTeamLeft);
+        entityController.SetBattleData(id, 10.0f, speed, isTeamLeft, 5.0f, 1.5f);
         Debug.Log(string.Format("new Entity:{0} speed{1}", id, speed));
     }
 
@@ -82,12 +83,20 @@ public class SpaceMgr : MonoBehaviour
 
     public GameObject GetEntityById(string id)
     {
-        return m_entities[id];
+        if (m_entities.ContainsKey(id))
+            return m_entities[id];
+        return null;
     }
 
     private void RegisterEntity(string id, GameObject entity)
     {
         m_entities.Add(id, entity);
+    }
+
+    public void RemoveEntity(string id)
+    {
+        if (m_entities.ContainsKey(id))
+            m_entities.Remove(id);
     }
 
     public GameObject GetRandomEntityByTeam(bool isTeamLeft)
