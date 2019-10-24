@@ -48,7 +48,7 @@ public class SpaceMgr : MonoBehaviour
         RegisterEntity(id, entity);
         var speed = Random.Range(1.0f, 10.0f);
         var entityController = entity.GetComponent<BattleEntityController>();
-        entityController.SetBattleData(id, speed, isTeamLeft);
+        entityController.SetBattleData(id, 10.0f, speed, isTeamLeft);
         Debug.Log(string.Format("new Entity:{0} speed{1}", id, speed));
     }
 
@@ -88,5 +88,25 @@ public class SpaceMgr : MonoBehaviour
     private void RegisterEntity(string id, GameObject entity)
     {
         m_entities.Add(id, entity);
+    }
+
+    public GameObject GetRandomEntityByTeam(bool isTeamLeft)
+    {
+        List<BattleEntityController> ret;
+        if (isTeamLeft)
+        {
+            ret = GetTeamLeftMemberController();
+        }
+        else
+        {
+            ret = GetTeamRightMemberController();
+        }
+        int len = ret.Count;
+        if (len == 0)
+        {
+            return null;
+        }
+        int randomIndex = Random.Range(0, len);
+        return ret[randomIndex].gameObject;
     }
 }

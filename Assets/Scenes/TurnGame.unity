@@ -163,6 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbf737e427d9ae47bac2eda131ffef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasNode: {fileID: 996170304}
+  healthUIObject: {fileID: 3564658997692646993, guid: 507ef36a7900c104cb5a348ad5429a9c,
+    type: 3}
   m_TurnInfoText: {fileID: 1009645848}
 --- !u!1 &662750931
 GameObject:

@@ -23,7 +23,7 @@ public class TurnMgr
 
     public void BeginTurn()
     {
-        SetTurnInfo(1);
+        NextBigTurn();
     }
 
     private void SetTurnInfo(int turn)
@@ -32,6 +32,12 @@ public class TurnMgr
         UIMgr.Instance.SetTurnInfoText(m_BigTurnInfo);
         SortBattleEntitySpeed();
         AssignNextEntityTurn();
+    }
+
+    private void NextBigTurn()
+    {
+        m_BigTurnInfo++;
+        SetTurnInfo(m_BigTurnInfo);
     }
 
     /// <summary>
@@ -51,6 +57,11 @@ public class TurnMgr
 
     private void AssignNextEntityTurn()
     {
+        if (m_SmallTurnOrderIndex == m_SmallTurnOrder.Count)
+        {
+            NextBigTurn();
+            return;
+        }
         var target_id = m_SmallTurnOrder[m_SmallTurnOrderIndex++];
         AssignEntityTurn(target_id);
     }
@@ -71,8 +82,8 @@ public class TurnMgr
     /// entity结束自己小回合
     /// </summary>
     /// <param name="id"></param>
-    public void EntityEndTurn(string id)
+    public void EntityEndTurn()
     {
-
+        AssignNextEntityTurn();
     }
 }
