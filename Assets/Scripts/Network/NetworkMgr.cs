@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using Usercmd;
-using Google.Protobuf;
 
 public class NetworkMgr : MonoBehaviour
 {
@@ -16,6 +14,7 @@ public class NetworkMgr : MonoBehaviour
     {
         Instance = this;
     }
+
     void Start()
     {
         m_Connection = new NetworkConnection();
@@ -24,6 +23,11 @@ public class NetworkMgr : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public NetworkConnection GetConnection()
+    {
+        return m_Connection;
     }
 
     private void OnApplicationQuit()
@@ -37,14 +41,5 @@ public class NetworkMgr : MonoBehaviour
     public void ConnectToServer()
     {
         m_Connection.InitConnection();
-    }
-
-    public void SendHello()
-    {
-        LoginC2SMsg a = new LoginC2SMsg
-        {
-            Name = "xzy"
-        };
-        m_Connection.SendData((UInt16)UserCmd.LoginReq, a.ToByteArray());
     }
 }

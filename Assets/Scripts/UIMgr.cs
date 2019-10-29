@@ -12,6 +12,7 @@ public class UIMgr : MonoBehaviour
     [SerializeField] private GameObject winShowText = null;
     [SerializeField] private GameObject explosionObject = null;
     [SerializeField] private GameObject damageNumObject = null;
+    [SerializeField] private GameObject reqIntoRoomPanel = null;
 
 
     public static UIMgr Instance;
@@ -87,4 +88,10 @@ public class UIMgr : MonoBehaviour
         winShowText.GetComponent<Text>().text = isTeamLeftWin ? "Left Win" : "Right Win";
         winShowText.SetActive(true);
     }
+
+    public void ShowReqIntoRoomPanel()
+    {
+        reqIntoRoomPanel.GetComponent<ReqIntoRoomPanelController>().ShowMe();
+    }
+
 }

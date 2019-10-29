@@ -162,6 +162,7 @@ public class NetworkConnection
         {
             case (int)UserCmd.LoginRes:
                 var msg = LoginS2CMsg.Parser.ParseFrom(msgBody);
+                G.Instance.playerId = (int)msg.PlayerId;
                 Debug.Log("PlayerId: " + msg.PlayerId);
                 break;
             default:
