@@ -9,16 +9,6 @@ public class GameMgr : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
-
         m_SpaceMgr = GetComponent<SpaceMgr>();
-
-        Invoke("GameStart", 1.0f);
-    }
-
-    void GameStart()
-    {
-        Debug.Log("Game Start");
-        // m_SpaceMgr.InitBattleTurnSpace();
-        NetworkMgr.Instance.SendHello();
     }
 }

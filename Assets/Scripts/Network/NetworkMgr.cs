@@ -10,7 +10,8 @@ public class NetworkMgr : MonoBehaviour
 {
     public static NetworkMgr Instance;
     private NetworkConnection m_Connection;
-    public Action<bool> connectCallback;
+    public bool isConnectedToServer = false;
+
     private void Awake()
     {
         Instance = this;
@@ -18,7 +19,6 @@ public class NetworkMgr : MonoBehaviour
     void Start()
     {
         m_Connection = new NetworkConnection();
-        m_Connection.InitConnection();
     }
 
     void Update()
@@ -32,6 +32,11 @@ public class NetworkMgr : MonoBehaviour
         {
             m_Connection.CloseConnection();
         }
+    }
+
+    public void ConnectToServer()
+    {
+        m_Connection.InitConnection();
     }
 
     public void SendHello()

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System;
+using Usercmd;
 
 public class NetworkConnection
 {
@@ -17,6 +18,8 @@ public class NetworkConnection
 
     public void InitConnection()
     {
+        if (m_TcpSocket != null && m_TcpSocket.Connected)
+            return;
         m_ServerIPEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8888);
         m_TcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         m_TcpSocket.NoDelay = true;
@@ -25,7 +28,12 @@ public class NetworkConnection
 
     public void CloseConnection()
     {
-        m_TcpSocket.Close();
+        if (m_TcpSocket != null)
+        {
+            m_TcpSocket.Close();
+            NetworkMgr.Instance.isConnectedToServer = false;
+        }
+            
     }
 
     public void AsyncConnectCallback(IAsyncResult result)
@@ -39,6 +47,7 @@ public class NetworkConnection
             m_recvThread.Start();
             m_sendThread = new Thread(SendDataLoop);
             m_sendThread.Start();
+            NetworkMgr.Instance.isConnectedToServer = true;
         }
         catch (Exception e)
         {
@@ -48,94 +57,82 @@ public class NetworkConnection
 
     private void ReceiveDataLoop()
     {
-        try
+        byte[] recvBuff = new byte[64 * 1024];
+        int hasRecvDataLen = 0;
+        int dataLen = 0;
+        int msgLen = 0;
+        int needSize = 4;
+        while (m_TcpSocket.Connected)
         {
-            byte[] recvBuff = new byte[64 * 1024];
-            int hasRecvDataLen = 0;
-            int dataLen = 0;
-            int msgLen = 0;
-            int msgId = 0;
-            int needSize = 4;
-            while (m_TcpSocket.Connected)
+            if (m_TcpSocket.Poll(10 * 1000, SelectMode.SelectRead))
             {
-                if (m_TcpSocket.Poll(10 * 1000, SelectMode.SelectRead))
+                dataLen = m_TcpSocket.Receive(recvBuff, hasRecvDataLen, needSize, SocketFlags.None);
+                if (dataLen == 0)
                 {
-                    dataLen = m_TcpSocket.Receive(recvBuff, hasRecvDataLen, needSize, SocketFlags.None);
-                    if (dataLen == 0)
-                    {
-                        m_TcpSocket.Close();
-                        break;
-                    }
-                    hasRecvDataLen += dataLen;
-                    if (hasRecvDataLen < 4)
-                        continue;
-                    msgLen = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(recvBuff, 0));
-                    if (hasRecvDataLen < msgLen + 4)
-                    {
-                        needSize = msgLen + 4 - hasRecvDataLen;
-                        continue;
-                    }
-                    needSize = 4;
-                    msgId = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(recvBuff, 4));
-                    Debug.Log("recv header msg len:" + msgLen + " msgId:" + msgId);
+                    m_TcpSocket.Close();
+                    break;
                 }
+                hasRecvDataLen += dataLen;
+                if (hasRecvDataLen < 4)
+                    continue;
+                msgLen = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(recvBuff, 0));
+                if (hasRecvDataLen < msgLen + 4)
+                {
+                    needSize = msgLen + 4 - hasRecvDataLen;
+                    continue;
+                }
+                ParseData(recvBuff, hasRecvDataLen);
+                Array.Clear(recvBuff, 0, hasRecvDataLen);
+                needSize = 4;
+                hasRecvDataLen = 0;
             }
         }
-        catch (Exception e)
-        {
-            Debug.LogError("ReceiveDataLoop: " + e.Message);
-        }
         Debug.Log("ReceiveDataLoop Exit...");
+        CloseConnection();
     }
 
     private void SendDataLoop()
     {
-        try
+        byte[] tmpBuf = new byte[64 * 1024];
+        int tmpBufSize = 0;
+        int dataLen = 0;
+        int hasSendDataLen = 0;
+
+        while (m_TcpSocket.Connected)
         {
-            byte[] tmpBuf = new byte[64 * 1024];
-            int tmpBufSize = 0;
-            int dataLen = 0;
-            int hasSendDataLen = 0;
-
-            while (m_TcpSocket.Connected)
+            if (m_SendBuffer.DataCount == 0 && hasSendDataLen == tmpBufSize)
             {
-                if (m_SendBuffer.DataCount == 0 && hasSendDataLen == tmpBufSize)
-                {
-                    Thread.Sleep(10);
-                    continue;
-                }
-                else if (hasSendDataLen < tmpBufSize)
-                {
+                Thread.Sleep(10);
+                continue;
+            }
+            else if (hasSendDataLen < tmpBufSize)
+            {
 
-                }
-                else
+            }
+            else
+            {
+                lock (m_SendBuffer)
                 {
-                    lock (m_SendBuffer)
-                    {
-                        tmpBufSize = m_SendBuffer.DataCount;
-                        m_SendBuffer.ReadBuffer(tmpBuf, 0, m_SendBuffer.DataCount);
-                        m_SendBuffer.Clear(m_SendBuffer.DataCount);
-                    }
+                    tmpBufSize = m_SendBuffer.DataCount;
+                    m_SendBuffer.ReadBuffer(tmpBuf, 0, m_SendBuffer.DataCount);
+                    m_SendBuffer.Clear(m_SendBuffer.DataCount);
                 }
+            }
 
-                if (m_TcpSocket.Poll(10 * 1000, SelectMode.SelectWrite))
+            if (m_TcpSocket.Poll(10 * 1000, SelectMode.SelectWrite))
+            {
+                dataLen = m_TcpSocket.Send(tmpBuf, hasSendDataLen, tmpBufSize, SocketFlags.None);
+                hasSendDataLen += dataLen;
+                if (hasSendDataLen == tmpBufSize)
                 {
-                    dataLen = m_TcpSocket.Send(tmpBuf, hasSendDataLen, tmpBufSize, SocketFlags.None);
-                    hasSendDataLen += dataLen;
-                    if (hasSendDataLen == tmpBufSize)
-                    {
-                        Array.Clear(tmpBuf, 0, tmpBufSize);
-                        tmpBufSize = 0;
-                        hasSendDataLen = 0;
-                    }
+                    Array.Clear(tmpBuf, 0, tmpBufSize);
+                    tmpBufSize = 0;
+                    hasSendDataLen = 0;
                 }
             }
         }
-        catch (Exception e)
-        {
-            Debug.LogError("SendDataLoop: " + e.Message);
-        }
         Debug.Log("SendDataLoop Exit...");
+        CloseConnection();
     }
 
     public void SendData(UInt16 msgId, byte[] data)
@@ -152,6 +149,24 @@ public class NetworkConnection
         lock (m_SendBuffer)
         {
             m_SendBuffer.WriteBuffer(sendData);
+        }
+    }
+
+    private void ParseData(byte[] data, int dataLen)
+    {
+        int msgId = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(data, 4));
+        int bodyLen = dataLen - 6;
+        byte[] msgBody = new byte[bodyLen];
+        Buffer.BlockCopy(data, 6, msgBody, 0, bodyLen);
+        switch (msgId)
+        {
+            case (int)UserCmd.LoginRes:
+                var msg = LoginS2CMsg.Parser.ParseFrom(msgBody);
+                Debug.Log("PlayerId: " + msg.PlayerId);
+                break;
+            default:
+                Debug.Log("unknown msg id: " + msgId);
+                break;
         }
     }
 }
