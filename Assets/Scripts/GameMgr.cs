@@ -18,6 +18,7 @@ public class GameMgr : MonoBehaviour
     void GameStart()
     {
         Debug.Log("Game Start");
-        m_SpaceMgr.InitBattleTurnSpace();
+        // m_SpaceMgr.InitBattleTurnSpace();
+        NetworkMgr.Instance.SendHello();
     }
 }
