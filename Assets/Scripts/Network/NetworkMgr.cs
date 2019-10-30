@@ -65,6 +65,10 @@ public class NetworkMgr : MonoBehaviour
                 G.Instance.playerId = (int)body.PlayerId;
                 UIMgr.Instance.ShowReqIntoRoomPanel();
                 return;
+            case (int)UserCmd.IntoRoomRes:
+                var b = IntoRoomS2cMsg.Parser.ParseFrom(msg.GetMsgData());
+                Debug.Log("room id " + b.RoomId);
+                return;
             default:
                 Debug.Log("unknown msg id: " + msgId);
                 break;
