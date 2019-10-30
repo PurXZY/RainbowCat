@@ -12,6 +12,8 @@ public class NetworkMgr : MonoBehaviour
     public bool isConnectedToServer = false;
 
     public Queue<NetMsg> msgQueue = new Queue<NetMsg>();
+    private Dictionary<int, Action<NetMsg>> msgDispatcher = new Dictionary<int, Action<NetMsg>>();
+    private MsgHandler handler;
 
     private void Awake()
     {
@@ -21,6 +23,7 @@ public class NetworkMgr : MonoBehaviour
     void Start()
     {
         m_Connection = new NetworkConnection();
+        handler = new MsgHandler();
     }
 
     void Update()
@@ -58,20 +61,23 @@ public class NetworkMgr : MonoBehaviour
     private void DispatchNetMsg(NetMsg msg)
     {
         var msgId = msg.GetMsgId();
-        switch (msgId)
+        if (msgDispatcher.ContainsKey(msgId))
         {
-            case (int)UserCmd.LoginRes:
-                var body = LoginS2CMsg.Parser.ParseFrom(msg.GetMsgData());
-                G.Instance.playerId = (int)body.PlayerId;
-                UIMgr.Instance.ShowReqIntoRoomPanel();
-                return;
-            case (int)UserCmd.IntoRoomRes:
-                var b = IntoRoomS2cMsg.Parser.ParseFrom(msg.GetMsgData());
-                Debug.Log("room id " + b.RoomId);
-                return;
-            default:
-                Debug.Log("unknown msg id: " + msgId);
-                break;
+            msgDispatcher[msgId]?.Invoke(msg);
         }
+        else
+        {
+            Debug.Log("unknown msg id: " + msgId);
+        }
+    }
+
+    public void RegisterMsgHandler(int msgId, Action<NetMsg> action)
+    {
+        if (msgDispatcher.ContainsKey(msgId))
+        {
+            Debug.Log("RegisterMsgHandler same msg id " + msgId);
+            return;
+        }
+        msgDispatcher[msgId] = action;
     }
 }
