@@ -98,4 +98,9 @@ public class UIMgr : MonoBehaviour
         reqIntoRoomPanel.GetComponent<ReqIntoRoomPanelController>().ShowMe();
         accountInfoPanel.GetComponent<AccountInfoPanelController>().ShowMe();
     }
+
+    public void OnIntoRoom()
+    {
+        reqIntoRoomPanel.GetComponent<ReqIntoRoomPanelController>().HideMe();
+    }
 }

@@ -23,5 +23,6 @@ public class MsgHandler
     {
         var body = IntoRoomS2cMsg.Parser.ParseFrom(msg.GetMsgData());
         Debug.Log("room id " + body.RoomId);
+        UIMgr.Instance.OnIntoRoom();
     }
 }
