@@ -12,7 +12,9 @@ public class UIMgr : MonoBehaviour
     [SerializeField] private GameObject winShowText = null;
     [SerializeField] private GameObject explosionObject = null;
     [SerializeField] private GameObject damageNumObject = null;
+    [SerializeField] private GameObject loginPanel = null;
     [SerializeField] private GameObject reqIntoRoomPanel = null;
+    [SerializeField] private GameObject accountInfoPanel = null;
 
 
     public static UIMgr Instance;
@@ -26,6 +28,7 @@ public class UIMgr : MonoBehaviour
     private void Start()
     {
         canvasRectTransform = canvasNode.gameObject.GetComponent<RectTransform>();
+        loginPanel.GetComponent<LoginPanelContrlloer>().ShowMe();
     }
 
     [SerializeField] private Text m_TurnInfoText = null;
@@ -91,7 +94,8 @@ public class UIMgr : MonoBehaviour
 
     public void ShowReqIntoRoomPanel()
     {
+        loginPanel.GetComponent<LoginPanelContrlloer>().HideMe();
         reqIntoRoomPanel.GetComponent<ReqIntoRoomPanelController>().ShowMe();
+        accountInfoPanel.GetComponent<AccountInfoPanelController>().ShowMe();
     }
-
 }

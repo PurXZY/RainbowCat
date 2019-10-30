@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System;
-using Usercmd;
 
 public class NetworkConnection
 {
@@ -140,7 +139,7 @@ public class NetworkConnection
         int dataLen = data.Length;
         byte[] sendData = new byte[6 + dataLen];
         byte[] lenbytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(dataLen + 2));
-        byte[] idbytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(msgId));
+        byte[] idbytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder((short)msgId));
 
         Array.Copy(lenbytes, 0, sendData, 0, 4);
         Array.Copy(idbytes, 0, sendData, 4, 2);
@@ -158,16 +157,10 @@ public class NetworkConnection
         int bodyLen = dataLen - 6;
         byte[] msgBody = new byte[bodyLen];
         Buffer.BlockCopy(data, 6, msgBody, 0, bodyLen);
-        switch (msgId)
+        var netMsg = new NetMsg(msgId, msgBody);
+        lock(NetworkMgr.Instance.msgQueue)
         {
-            case (int)UserCmd.LoginRes:
-                var msg = LoginS2CMsg.Parser.ParseFrom(msgBody);
-                G.Instance.playerId = (int)msg.PlayerId;
-                Debug.Log("PlayerId: " + msg.PlayerId);
-                break;
-            default:
-                Debug.Log("unknown msg id: " + msgId);
-                break;
+            NetworkMgr.Instance.msgQueue.Enqueue(netMsg);
         }
     }
 }

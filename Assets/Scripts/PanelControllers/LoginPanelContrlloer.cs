@@ -20,20 +20,29 @@ public class LoginPanelContrlloer : MonoBehaviour
     public void OnLoginBtnClick()
     {
         InputField input = loginInput.GetComponent<InputField>();
-
+        string loginName = input.text;
         LoginC2SMsg msg = new LoginC2SMsg
         {
-            Name = input.text
+            Name = loginName
         };
-        NetworkMgr.Instance.GetConnection().SendData((UInt16)UserCmd.LoginReq, msg.ToByteArray());     
+        NetworkMgr.Instance.GetConnection().SendData((UInt16)UserCmd.LoginReq, msg.ToByteArray());
+        G.Instance.accountStr = loginName;
+    }
+
+    public void ShowMe()
+    {
+        this.gameObject.SetActive(true);
+    }
+
+    public void HideMe()
+    {
+        this.gameObject.SetActive(false);
     }
 
     private void Update()
     { 
         if (G.Instance.playerId != 0)
         {
-            UIMgr.Instance.ShowReqIntoRoomPanel();
-            Destroy(this.gameObject);
             return;
         }
         if (NetworkMgr.Instance.isConnectedToServer)

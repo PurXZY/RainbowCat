@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using Usercmd;
 
 public class NetworkMgr : MonoBehaviour
 {
     public static NetworkMgr Instance;
     private NetworkConnection m_Connection;
     public bool isConnectedToServer = false;
+
+    public Queue<NetMsg> msgQueue = new Queue<NetMsg>();
 
     private void Awake()
     {
@@ -22,7 +25,16 @@ public class NetworkMgr : MonoBehaviour
 
     void Update()
     {
-        
+        if (msgQueue.Count == 0)
+            return;
+        lock(msgQueue)
+        {
+            while (msgQueue.Count != 0)
+            {
+                var msg = msgQueue.Dequeue();
+                DispatchNetMsg(msg);
+            }
+        }
     }
 
     public NetworkConnection GetConnection()
@@ -41,5 +53,21 @@ public class NetworkMgr : MonoBehaviour
     public void ConnectToServer()
     {
         m_Connection.InitConnection();
+    }
+
+    private void DispatchNetMsg(NetMsg msg)
+    {
+        var msgId = msg.GetMsgId();
+        switch (msgId)
+        {
+            case (int)UserCmd.LoginRes:
+                var body = LoginS2CMsg.Parser.ParseFrom(msg.GetMsgData());
+                G.Instance.playerId = (int)body.PlayerId;
+                UIMgr.Instance.ShowReqIntoRoomPanel();
+                return;
+            default:
+                Debug.Log("unknown msg id: " + msgId);
+                break;
+        }
     }
 }

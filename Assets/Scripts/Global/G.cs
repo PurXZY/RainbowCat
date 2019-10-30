@@ -18,4 +18,5 @@ public class G
     }
 
     public int playerId = 0;
+    public string accountStr = "";
 }

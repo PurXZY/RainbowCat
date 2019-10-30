@@ -1,16 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Usercmd;
+using System;
+using Google.Protobuf;
 
 public class ReqIntoRoomPanelController : MonoBehaviour
 {
-    private void OnBtnClick()
+    public void OnBtnClick()
     {
-
+        IntoRoomC2SMsg msg = new IntoRoomC2SMsg{};
+        NetworkMgr.Instance.GetConnection().SendData((UInt16)UserCmd.IntoRoomReq, msg.ToByteArray());
     }
 
     public void ShowMe()
     {
         this.gameObject.SetActive(true);
+    }
+
+    public void HideMe()
+    {
+        this.gameObject.SetActive(false);
     }
 }
