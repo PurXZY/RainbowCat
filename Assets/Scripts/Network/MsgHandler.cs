@@ -10,6 +10,7 @@ public class MsgHandler
         var mgr = NetworkMgr.Instance;
         mgr.RegisterMsgHandler((int)UserCmd.LoginRes, HandleLoginMsg);
         mgr.RegisterMsgHandler((int)UserCmd.IntoRoomRes, HandleIntoRoomMsg);
+        mgr.RegisterMsgHandler((int)UserCmd.CreateAllBattleEntities, HandleCreateAllBattleEntities);
     }
 
     private void HandleLoginMsg(NetMsg msg)
@@ -24,5 +25,11 @@ public class MsgHandler
         var body = IntoRoomS2cMsg.Parser.ParseFrom(msg.GetMsgData());
         Debug.Log("room id " + body.RoomId);
         UIMgr.Instance.OnIntoRoom();
+    }
+
+    private void HandleCreateAllBattleEntities(NetMsg msg)
+    {
+        var body = CreateAllBattleEntitiesS2CMsg.Parser.ParseFrom(msg.GetMsgData());
+        TurnRoomMgr.Instance.CreateAllBattleEntities(body.Entities);
     }
 }
