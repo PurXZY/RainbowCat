@@ -22,14 +22,15 @@ public class HealthUIController : MonoBehaviour
 
     public void SetOwner(string id, RectTransform canvas)
     {
-        m_owner = SpaceMgr.Instance.GetEntityById(id);
+        // m_owner = SpaceMgr.Instance.GetEntityById(id);
         m_canvas = canvas;
     }
 
     public void RefershHealth()
     {
         var ownerController = m_owner.GetComponent<BattleEntityController>();
-        float ratio = ownerController.m_CurHealth / ownerController.m_MaxHealth;
+        // float ratio = ownerController.m_CurHealth / ownerController.m_MaxHealth;
+        float ratio = 1;
         m_healthReal.fillAmount = ratio;
     }
 }

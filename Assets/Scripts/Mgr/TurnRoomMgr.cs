@@ -19,14 +19,17 @@ public class TurnRoomMgr : MonoBehaviour
     {
         foreach (var entity in entities)
         {
-            CreateBattleEntity(entity.PosIndex, entity.EntityType);
+            CreateBattleEntity(entity);
         }
     }
 
-    private void CreateBattleEntity(uint posIndex, uint entityType)
+    private void CreateBattleEntity(Usercmd.BattleEntity entityData)
     {
+        var posIndex = entityData.PosIndex;
         var pos = GData.Instance.PosIndexMap[posIndex];
         var entity = Instantiate(battleEntityObject, pos, Quaternion.identity, battleEntityParent);
-        m_entities.Add(posIndex, entity.GetComponent<BattleEntityController>());
+        var controller = entity.GetComponent<BattleEntityController>();
+        controller.Init(entityData);
+        m_entities.Add(posIndex, controller);
     }
 }

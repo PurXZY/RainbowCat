@@ -1364,7 +1364,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1566987183}
   - component: {fileID: 1566987185}
-  - component: {fileID: 1566987184}
   - component: {fileID: 1566987186}
   - component: {fileID: 1566987187}
   m_Layer: 0
@@ -1389,21 +1388,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1566987184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566987182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e682b43807db1640a95f4eeb9846065, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BattleEntity: {fileID: 5385770155547443590, guid: 87000ac9d68cbcf4e8dc048fe474d61d,
-    type: 3}
-  IsGameOver: 0
 --- !u!114 &1566987185
 MonoBehaviour:
   m_ObjectHideFlags: 0

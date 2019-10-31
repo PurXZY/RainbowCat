@@ -38,52 +38,11 @@ public class UIMgr : MonoBehaviour
         m_TurnInfoText.text = "回合: " + turn;
     }
 
-    public void HealthChanged(string id, float damage)
-    {
-        if (!m_EntityHealth.ContainsKey(id))
-        {
-            CreateNewHealth(id);
-        }
-        else
-        {
-            var healthUI = m_EntityHealth[id];
-            var healthController = healthUI.GetComponent<HealthUIController>();
-            healthController.RefershHealth();
-        }
-        var owner = SpaceMgr.Instance.GetEntityById(id);
-        if (owner && damage > 0.01f)
-        {
-            var realPos = UIMgr.WorldToUGUIPosition(canvasRectTransform, (Vector2)owner.transform.position + new Vector2(0, 2));
-            var tmp = Instantiate(damageNumObject, realPos, Quaternion.identity, canvasNode);
-            tmp.GetComponent<DamageController>().SetDamageText(damage);
-        }
-    }
-
-    private void CreateNewHealth(string id)
-    {
-        var target = SpaceMgr.Instance.GetEntityById(id);
-        var healthUI = Instantiate(healthUIObject, canvasNode);
-        m_EntityHealth.Add(id, healthUI);
-        healthUI.GetComponent<HealthUIController>().SetOwner(id, canvasRectTransform);
-    }
-
     public static Vector2 WorldToUGUIPosition(RectTransform canvasRectTransform, Vector3 worldPosition)
     {
         Vector2 viewPos = Camera.main.WorldToViewportPoint(worldPosition);
         return new Vector2(canvasRectTransform.rect.width * viewPos.x, canvasRectTransform.rect.height * viewPos.y);
 
-    }
-
-    public void OnEntityDestroy(string id)
-    {
-        var target = m_EntityHealth[id];
-        m_EntityHealth.Remove(id);
-        Destroy(target);
-        var entity = SpaceMgr.Instance.GetEntityById(id);
-        if (entity)
-        {
-            Instantiate(explosionObject, entity.transform.position, Quaternion.identity);
-        }
     }
 
     public void GameOver(bool isTeamLeftWin)
