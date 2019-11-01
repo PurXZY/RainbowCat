@@ -32,15 +32,15 @@ namespace Usercmd {
             "BCABKA0SEwoLTWFnaWNBdHRhY2sYBSABKA0SFgoOUGh5c2ljYWxEZWZlbmQY",
             "BiABKA0SEwoLTWFnaWNEZWZlbmQYByABKA0SEQoJTW92ZVNwZWVkGAggASgN",
             "IkgKHUNyZWF0ZUFsbEJhdHRsZUVudGl0aWVzUzJDTXNnEicKCGVudGl0aWVz",
-            "GAEgAygLMhUudXNlcmNtZC5CYXR0bGVFbnRpdHkiWQoOVHVybkluZm9TMkNN",
+            "GAEgAygLMhUudXNlcmNtZC5CYXR0bGVFbnRpdHkibwoOVHVybkluZm9TMkNN",
             "c2cSFAoMQmlnVHVybkluZGV4GAEgASgNEhYKDlNtYWxsVHVybkluZGV4GAIg",
-            "ASgNEhkKEUN1ckVudGl0eVBvc0luZGV4GAMgASgNKoABCgdVc2VyQ21kEgwK",
-            "CExvZ2luUmVxEAASDAoITG9naW5SZXMQARIPCgtJbnRvUm9vbVJlcRACEg8K",
-            "C0ludG9Sb29tUmVzEAMSGwoXQ3JlYXRlQWxsQmF0dGxlRW50aXRpZXMQBBIM",
-            "CghUdXJuSW5mbxAFEgwKCE1heENtZElkEAYqZAoIUG9zSW5kZXgSDAoIUG9z",
-            "RUxlZnQQABIOCgpQb3NFQ2VudGVyEAESDQoJUG9zRVJpZ2h0EAISDAoIUG9z",
-            "QkxlZnQQAxIOCgpQb3NCQ2VudGVyEAQSDQoJUG9zQlJpZ2h0EAViBnByb3Rv",
-            "Mw=="));
+            "ASgNEhkKEUN1ckVudGl0eVBvc0luZGV4GAMgASgNEhQKDE9wZXJhdGlvblNl",
+            "dBgEIAMoDSqAAQoHVXNlckNtZBIMCghMb2dpblJlcRAAEgwKCExvZ2luUmVz",
+            "EAESDwoLSW50b1Jvb21SZXEQAhIPCgtJbnRvUm9vbVJlcxADEhsKF0NyZWF0",
+            "ZUFsbEJhdHRsZUVudGl0aWVzEAQSDAoIVHVybkluZm8QBRIMCghNYXhDbWRJ",
+            "ZBAGKmQKCFBvc0luZGV4EgwKCFBvc0VMZWZ0EAASDgoKUG9zRUNlbnRlchAB",
+            "Eg0KCVBvc0VSaWdodBACEgwKCFBvc0JMZWZ0EAMSDgoKUG9zQkNlbnRlchAE",
+            "Eg0KCVBvc0JSaWdodBAFYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Usercmd.UserCmd), typeof(global::Usercmd.PosIndex), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -50,7 +50,7 @@ namespace Usercmd {
             new pbr::GeneratedClrTypeInfo(typeof(global::Usercmd.IntoRoomS2cMsg), global::Usercmd.IntoRoomS2cMsg.Parser, new[]{ "RoomId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Usercmd.BattleEntity), global::Usercmd.BattleEntity.Parser, new[]{ "PosIndex", "EntityType", "Health", "PhysicalAttack", "MagicAttack", "PhysicalDefend", "MagicDefend", "MoveSpeed" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Usercmd.CreateAllBattleEntitiesS2CMsg), global::Usercmd.CreateAllBattleEntitiesS2CMsg.Parser, new[]{ "Entities" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Usercmd.TurnInfoS2CMsg), global::Usercmd.TurnInfoS2CMsg.Parser, new[]{ "BigTurnIndex", "SmallTurnIndex", "CurEntityPosIndex" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Usercmd.TurnInfoS2CMsg), global::Usercmd.TurnInfoS2CMsg.Parser, new[]{ "BigTurnIndex", "SmallTurnIndex", "CurEntityPosIndex", "OperationSet" }, null, null, null, null)
           }));
     }
     #endregion
@@ -1041,6 +1041,7 @@ namespace Usercmd {
       bigTurnIndex_ = other.bigTurnIndex_;
       smallTurnIndex_ = other.smallTurnIndex_;
       curEntityPosIndex_ = other.curEntityPosIndex_;
+      operationSet_ = other.operationSet_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1082,6 +1083,16 @@ namespace Usercmd {
       }
     }
 
+    /// <summary>Field number for the "OperationSet" field.</summary>
+    public const int OperationSetFieldNumber = 4;
+    private static readonly pb::FieldCodec<uint> _repeated_operationSet_codec
+        = pb::FieldCodec.ForUInt32(34);
+    private readonly pbc::RepeatedField<uint> operationSet_ = new pbc::RepeatedField<uint>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<uint> OperationSet {
+      get { return operationSet_; }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as TurnInfoS2CMsg);
@@ -1098,6 +1109,7 @@ namespace Usercmd {
       if (BigTurnIndex != other.BigTurnIndex) return false;
       if (SmallTurnIndex != other.SmallTurnIndex) return false;
       if (CurEntityPosIndex != other.CurEntityPosIndex) return false;
+      if(!operationSet_.Equals(other.operationSet_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1107,6 +1119,7 @@ namespace Usercmd {
       if (BigTurnIndex != 0) hash ^= BigTurnIndex.GetHashCode();
       if (SmallTurnIndex != 0) hash ^= SmallTurnIndex.GetHashCode();
       if (CurEntityPosIndex != 0) hash ^= CurEntityPosIndex.GetHashCode();
+      hash ^= operationSet_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1132,6 +1145,7 @@ namespace Usercmd {
         output.WriteRawTag(24);
         output.WriteUInt32(CurEntityPosIndex);
       }
+      operationSet_.WriteTo(output, _repeated_operationSet_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -1149,6 +1163,7 @@ namespace Usercmd {
       if (CurEntityPosIndex != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(CurEntityPosIndex);
       }
+      size += operationSet_.CalculateSize(_repeated_operationSet_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -1169,6 +1184,7 @@ namespace Usercmd {
       if (other.CurEntityPosIndex != 0) {
         CurEntityPosIndex = other.CurEntityPosIndex;
       }
+      operationSet_.Add(other.operationSet_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -1190,6 +1206,11 @@ namespace Usercmd {
           }
           case 24: {
             CurEntityPosIndex = input.ReadUInt32();
+            break;
+          }
+          case 34:
+          case 32: {
+            operationSet_.AddEntriesFrom(input, _repeated_operationSet_codec);
             break;
           }
         }

@@ -29,7 +29,18 @@ public class TurnRoomMgr : MonoBehaviour
         var pos = GData.Instance.PosIndexMap[posIndex];
         var entity = Instantiate(battleEntityObject, pos, Quaternion.identity, battleEntityParent);
         var controller = entity.GetComponent<BattleEntityController>();
-        controller.Init(entityData);
         m_entities.Add(posIndex, controller);
+        controller.Init(entityData);
+    }
+
+    public BattleEntityController GetEntityController(uint pos)
+    {
+        return m_entities[pos];
+    }
+
+    public void AssignTargetTurn(uint curEntityPosIndex)
+    {
+        var controller = GetEntityController(curEntityPosIndex);
+        controller.ShowMyTurn();
     }
 }

@@ -7,5 +7,6 @@ public class GameMgr : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
+        var i = GData.Instance;
     }
 }

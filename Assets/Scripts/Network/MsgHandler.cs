@@ -37,6 +37,9 @@ public class MsgHandler
     private void HandleTurnInfo(NetMsg msg)
     {
         var body = TurnInfoS2CMsg.Parser.ParseFrom(msg.GetMsgData());
-        Debug.Log("HandleTurnInfo: " + body.BigTurnIndex + " " + body.SmallTurnIndex + " " + body.CurEntityPosIndex);
+        Debug.Log("TurnInfo: " + body.BigTurnIndex + " " + body.SmallTurnIndex + " " + body.CurEntityPosIndex);
+        UIMgr.Instance.SetTurnInfoText(body.BigTurnIndex);
+        TurnRoomMgr.Instance.AssignTargetTurn(body.CurEntityPosIndex);
+        UIMgr.Instance.ShowOperations(body.OperationSet);
     }
 }

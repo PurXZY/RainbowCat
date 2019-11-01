@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class HealthUIController : MonoBehaviour
 {
-    private GameObject m_owner;
-    private RectTransform m_canvas;
-    private Image m_healthReal;
+    private GameObject m_owner = null;
+    private RectTransform m_canvas = null;
+    private Image m_healthReal = null;
 
     void Start()
     {
@@ -20,17 +20,17 @@ public class HealthUIController : MonoBehaviour
         transform.position = UIMgr.WorldToUGUIPosition(m_canvas, pos);
     }
 
-    public void SetOwner(string id, RectTransform canvas)
+    public void SetOwner(uint id, RectTransform canvas)
     {
-        // m_owner = SpaceMgr.Instance.GetEntityById(id);
+        m_owner = TurnRoomMgr.Instance.GetEntityController(id).gameObject;
         m_canvas = canvas;
     }
 
     public void RefershHealth()
     {
-        var ownerController = m_owner.GetComponent<BattleEntityController>();
-        // float ratio = ownerController.m_CurHealth / ownerController.m_MaxHealth;
-        float ratio = 1;
-        m_healthReal.fillAmount = ratio;
+        //var ownerController = m_owner.GetComponent<BattleEntityController>();
+        //float ratio = ownerController.m_CurHealth / ownerController.m_MaxHealth;
+        //float ratio = 1;
+        //m_healthReal.fillAmount = ratio;
     }
 }

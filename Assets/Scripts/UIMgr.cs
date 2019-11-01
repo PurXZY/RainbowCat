@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Google.Protobuf.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,14 +9,14 @@ public class UIMgr : MonoBehaviour
     private Dictionary<string, GameObject> m_EntityHealth = new Dictionary<string, GameObject>();
     [SerializeField] private Transform canvasNode = null;
     private RectTransform canvasRectTransform = null;
-    [SerializeField] private GameObject healthUIObject = null;
-    [SerializeField] private GameObject winShowText = null;
     [SerializeField] private GameObject explosionObject = null;
     [SerializeField] private GameObject damageNumObject = null;
     [SerializeField] private GameObject loginPanel = null;
     [SerializeField] private GameObject reqIntoRoomPanel = null;
     [SerializeField] private GameObject accountInfoPanel = null;
-
+    [SerializeField] private OperationPanelController operationPanel = null;
+    [SerializeField] private EntityHealthController entityHealthPanel = null;
+    [SerializeField] private TurnInfoPanelController turnInfoController;
 
     public static UIMgr Instance;
 
@@ -33,9 +34,9 @@ public class UIMgr : MonoBehaviour
 
     [SerializeField] private Text m_TurnInfoText = null;
 
-    public void SetTurnInfoText(int turn)
+    public void SetTurnInfoText(uint turn)
     {
-        m_TurnInfoText.text = "回合: " + turn;
+        turnInfoController.SetTurnInfoText(turn);
     }
 
     public static Vector2 WorldToUGUIPosition(RectTransform canvasRectTransform, Vector3 worldPosition)
@@ -43,12 +44,6 @@ public class UIMgr : MonoBehaviour
         Vector2 viewPos = Camera.main.WorldToViewportPoint(worldPosition);
         return new Vector2(canvasRectTransform.rect.width * viewPos.x, canvasRectTransform.rect.height * viewPos.y);
 
-    }
-
-    public void GameOver(bool isTeamLeftWin)
-    {
-        winShowText.GetComponent<Text>().text = isTeamLeftWin ? "Left Win" : "Right Win";
-        winShowText.SetActive(true);
     }
 
     public void ShowReqIntoRoomPanel()
@@ -61,5 +56,15 @@ public class UIMgr : MonoBehaviour
     public void OnIntoRoom()
     {
         reqIntoRoomPanel.GetComponent<ReqIntoRoomPanelController>().HideMe();
+    }
+
+    public void ShowOperations(RepeatedField<uint> operationSet)
+    {
+        operationPanel.ShowOperations(operationSet);
+    }
+
+    public void NewBattleEntity(uint entityPosIndex)
+    {
+        entityHealthPanel.CreateHealthBar(entityPosIndex);
     }
 }
