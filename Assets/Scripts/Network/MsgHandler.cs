@@ -8,10 +8,10 @@ public class MsgHandler
     public MsgHandler()
     {
         var mgr = NetworkMgr.Instance;
-        mgr.RegisterMsgHandler((int)UserCmd.LoginRes, HandleLoginMsg);
-        mgr.RegisterMsgHandler((int)UserCmd.IntoRoomRes, HandleIntoRoomMsg);
-        mgr.RegisterMsgHandler((int)UserCmd.CreateAllBattleEntities, HandleCreateAllBattleEntities);
-        mgr.RegisterMsgHandler((int)UserCmd.TurnInfo, HandleTurnInfo);
+        mgr.RegisterMsgHandler((int)CmdType.LoginRes, HandleLoginMsg);
+        mgr.RegisterMsgHandler((int)CmdType.IntoRoomRes, HandleIntoRoomMsg);
+        mgr.RegisterMsgHandler((int)CmdType.SyncAllBattleEntities, HandleCreateAllBattleEntities);
+        mgr.RegisterMsgHandler((int)CmdType.TurnInfo, HandleTurnInfo);
     }
 
     private void HandleLoginMsg(NetMsg msg)
@@ -30,7 +30,7 @@ public class MsgHandler
 
     private void HandleCreateAllBattleEntities(NetMsg msg)
     {
-        var body = CreateAllBattleEntitiesS2CMsg.Parser.ParseFrom(msg.GetMsgData());
+        var body = SyncAllBattleEntitiesS2CMsg.Parser.ParseFrom(msg.GetMsgData());
         TurnRoomMgr.Instance.CreateAllBattleEntities(body.Entities);
     }
 

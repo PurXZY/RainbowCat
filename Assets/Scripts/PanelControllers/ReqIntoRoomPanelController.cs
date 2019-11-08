@@ -10,7 +10,7 @@ public class ReqIntoRoomPanelController : MonoBehaviour
     public void OnBtnClick()
     {
         IntoRoomC2SMsg msg = new IntoRoomC2SMsg{};
-        NetworkMgr.Instance.GetConnection().SendData((UInt16)UserCmd.IntoRoomReq, msg.ToByteArray());
+        NetworkMgr.Instance.GetConnection().SendData((UInt16)CmdType.IntoRoomReq, msg.ToByteArray());
     }
 
     public void ShowMe()

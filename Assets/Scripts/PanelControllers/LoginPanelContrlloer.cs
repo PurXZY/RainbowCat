@@ -25,7 +25,7 @@ public class LoginPanelContrlloer : MonoBehaviour
         {
             Name = loginName
         };
-        NetworkMgr.Instance.GetConnection().SendData((UInt16)UserCmd.LoginReq, msg.ToByteArray());
+        NetworkMgr.Instance.GetConnection().SendData((UInt16)CmdType.LoginReq, msg.ToByteArray());
         G.Instance.accountStr = loginName;
     }
 

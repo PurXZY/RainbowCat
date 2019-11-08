@@ -75,9 +75,9 @@ public class NetworkConnection
                 if (hasRecvDataLen < 4)
                     continue;
                 msgLen = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(recvBuff, 0));
-                if (hasRecvDataLen < msgLen + 4)
+                if (hasRecvDataLen < msgLen)
                 {
-                    needSize = msgLen + 4 - hasRecvDataLen;
+                    needSize = msgLen - hasRecvDataLen;
                     continue;
                 }
                 ParseData(recvBuff, hasRecvDataLen);
@@ -138,7 +138,7 @@ public class NetworkConnection
     {
         int dataLen = data.Length;
         byte[] sendData = new byte[6 + dataLen];
-        byte[] lenbytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(dataLen + 2));
+        byte[] lenbytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(dataLen + 6));
         byte[] idbytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder((short)msgId));
 
         Array.Copy(lenbytes, 0, sendData, 0, 4);
