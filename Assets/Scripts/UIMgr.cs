@@ -68,6 +68,11 @@ public class UIMgr : MonoBehaviour
         entityHealthPanel.CreateHealthBar(entityPosIndex);
     }
 
+    public void CancelAllShowTarget()
+    {
+        TurnRoomMgr.Instance.CancelAllShowTarget();
+    }
+
     public void ShowChooseOneTarget()
     {
         TurnRoomMgr.Instance.ShowChooseOneTarget();

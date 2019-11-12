@@ -7,7 +7,8 @@ public class BattleEntityController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer m_underfootSprite = null;
     [SerializeField] private GameObject m_showtarget = null;
-    private uint m_posIndex = 0;
+    [SerializeField] private AnimationClip flashAni = null;
+    public uint m_posIndex = 0;
 
     private float m_MoveSpeed = 0.0f;
     private float m_MaxHealth = 0.0f;
@@ -36,6 +37,11 @@ public class BattleEntityController : MonoBehaviour
         UIMgr.Instance.NewBattleEntity(m_posIndex);
     }
 
+    public static bool IsEnemy(BattleEntityController target)
+    {
+        return target.m_posIndex < 3;
+    }
+
     public void ShowMyTurn()
     {
         m_underfootSprite.color = Color.red;
@@ -43,14 +49,11 @@ public class BattleEntityController : MonoBehaviour
 
     public void ShowTargetChoose(bool isHide=false)
     {
-        if (isHide)
-        {
-            m_showtarget.SetActive(false);
-        }
-        else
-        {
-            m_showtarget.SetActive(true);
-            m_showtarget.GetComponent<Animation>().Play();
-        }
+        m_showtarget.SetActive(!isHide);
+    }
+
+    public bool IsInMyTriggerRect(Vector2 pos)
+    {
+        return true;
     }
 }

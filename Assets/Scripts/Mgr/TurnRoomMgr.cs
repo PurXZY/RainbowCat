@@ -49,7 +49,17 @@ public class TurnRoomMgr : MonoBehaviour
         foreach (var kvp in m_entities)
         {
             var c = kvp.Value;
-            c.ShowTargetChoose(false);
+            if (BattleEntityController.IsEnemy(c))
+               c.ShowTargetChoose(false);
+        }
+    }
+
+    public void CancelAllShowTarget()
+    {
+        foreach (var kvp in m_entities)
+        {
+            var c = kvp.Value;
+            c.ShowTargetChoose(true);
         }
     }
 }
