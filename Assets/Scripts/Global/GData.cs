@@ -5,11 +5,18 @@ using Usercmd;
 using System.IO;
 using System.Text;
 
+public struct OperationData
+{
+    public uint id;
+    public string name;
+    public uint enemyType;
+}
+
 public class GData
 {
     public static GData Instance { get; } = new GData();
 
-    private Dictionary<uint, string> operationData = new Dictionary<uint, string>();
+    private Dictionary<uint, OperationData> operationData = new Dictionary<uint, OperationData>();
 
     public GData()
     {
@@ -32,15 +39,20 @@ public class GData
         foreach (var tmp in j.list)
         {
             uint id = (uint)tmp["id"].n;
-            string name = tmp["name"].str;
-            operationData[id] = name;
+
+            operationData[id] = new OperationData
+            {
+                id = id,
+                name = tmp["name"].str,
+                enemyType = (uint)tmp["enemy_type"].n
+            };
         }
     }
 
-    public string GetOperationData(uint id)
+    public OperationData GetOperationData(uint id)
     {
         if (operationData.ContainsKey(id))
             return operationData[id];
-        return null;
+        return new OperationData{};
     }
 }

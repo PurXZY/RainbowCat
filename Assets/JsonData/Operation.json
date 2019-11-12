@@ -1,14 +1,17 @@
 [
 	{
 		"id": 1,
-		"name": "物理攻击"
+    "name": "物理攻击",
+    "enemy_type": 1
 	},
-	{
-		"id": 2,
-		"name": "魔法AOE"
-	},
-	{
-		"id": 3,
-		"name": "回血"
-	}
+  {
+    "id": 2,
+    "name": "魔法AOE",
+    "enemy_type": 2
+  },
+  {
+    "id": 3,
+    "name": "回血",
+    "enemy_type": 3
+  }
 ]

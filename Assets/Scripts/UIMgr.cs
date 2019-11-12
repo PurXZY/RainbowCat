@@ -14,7 +14,7 @@ public class UIMgr : MonoBehaviour
     [SerializeField] private GameObject loginPanel = null;
     [SerializeField] private GameObject reqIntoRoomPanel = null;
     [SerializeField] private GameObject accountInfoPanel = null;
-    [SerializeField] private OperationPanelController operationPanel = null;
+    [SerializeField] public OperationPanelController operationPanel = null;
     [SerializeField] private EntityHealthController entityHealthPanel = null;
     [SerializeField] private TurnInfoPanelController turnInfoController;
 
@@ -66,5 +66,10 @@ public class UIMgr : MonoBehaviour
     public void NewBattleEntity(uint entityPosIndex)
     {
         entityHealthPanel.CreateHealthBar(entityPosIndex);
+    }
+
+    public void ShowChooseOneTarget()
+    {
+        TurnRoomMgr.Instance.ShowChooseOneTarget();
     }
 }

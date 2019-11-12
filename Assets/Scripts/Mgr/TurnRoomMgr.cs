@@ -13,7 +13,7 @@ public class TurnRoomMgr : MonoBehaviour
 
     [SerializeField] private Transform battleEntityParent = null;
     [SerializeField] private GameObject battleEntityObject = null;
-    private Dictionary<uint, BattleEntityController> m_entities = new Dictionary<uint, BattleEntityController>();
+    public Dictionary<uint, BattleEntityController> m_entities = new Dictionary<uint, BattleEntityController>();
 
     public void CreateAllBattleEntities(RepeatedField<Usercmd.BattleEntity> entities)
     {
@@ -42,5 +42,14 @@ public class TurnRoomMgr : MonoBehaviour
     {
         var controller = GetEntityController(curEntityPosIndex);
         controller.ShowMyTurn();
+    }
+
+    public void ShowChooseOneTarget()
+    {
+        foreach (var kvp in m_entities)
+        {
+            var c = kvp.Value;
+            c.ShowTargetChoose(false);
+        }
     }
 }

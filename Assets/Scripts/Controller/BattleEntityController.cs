@@ -6,6 +6,7 @@ using Usercmd;
 public class BattleEntityController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer m_underfootSprite = null;
+    [SerializeField] private GameObject m_showtarget = null;
     private uint m_posIndex = 0;
 
     private float m_MoveSpeed = 0.0f;
@@ -31,11 +32,25 @@ public class BattleEntityController : MonoBehaviour
         m_MagicAttack = entityData.MagicAttack;
         m_MagicDefend = entityData.MagicDefend;
 
+        ShowTargetChoose(true);
         UIMgr.Instance.NewBattleEntity(m_posIndex);
     }
 
     public void ShowMyTurn()
     {
         m_underfootSprite.color = Color.red;
+    }
+
+    public void ShowTargetChoose(bool isHide=false)
+    {
+        if (isHide)
+        {
+            m_showtarget.SetActive(false);
+        }
+        else
+        {
+            m_showtarget.SetActive(true);
+            m_showtarget.GetComponent<Animation>().Play();
+        }
     }
 }
